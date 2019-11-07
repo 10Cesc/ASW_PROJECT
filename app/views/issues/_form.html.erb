@@ -1,0 +1,48 @@
+<%= form_with(model: issue, local: true) do |form| %>
+  <% if issue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
+
+      <ul>
+        <% issue.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assignee_id %>
+    <%= form.select :assignee_id, User.all.map { |u| [ u.username, u.id ] }%>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority_id %>
+    <%= form.select :priority_id, Priority.all.map{|p| [p.name, p.id] } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :issue_type_id %>
+    <%= form.select :issue_type_id, IssueType.all.map{|t|[t.name, t.id]} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    TODO: should be oneself -> remove this field and assign in controller -> create
+    <%= form.label :creator_id %>
+    <%= form.select :creator_id, User.all.map { |u| [ u.username, u.id ] }%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
